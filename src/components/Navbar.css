@@ -1,0 +1,24 @@
+.navbar {
+    background-color: #0078a8;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar h1 {
+    margin: 0;
+  }
+  
+  .search-bar {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+  
+  .user-name {
+    margin-left: 10px;
+  }
+  

@@ -1,0 +1,46 @@
+.conference-list-container {
+    padding: 20px;
+  }
+  
+  .tabs {
+    margin-top: 10px;
+  }
+  
+  .tabs button {
+    background-color: #0078a8;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .tabs button.active {
+    background-color: #005f85;
+  }
+  
+  .filter-input {
+    float: right;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
