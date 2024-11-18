@@ -84,10 +84,13 @@ import Home from './components/Home';
 import ConferenceDetails from './components/ConferenceDetails';
 import SubmissionForm from './components/SubmissionForm';
 import { RecoilRoot, useRecoilState } from 'recoil';
+import UserForm from './components/UserForm';
+import { LogStatus,newemail } from './States';
+import CreateConference from './components/CreateConference';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedIn);
-  const [userEmail, setUserEmail] = useRecoilState(userEmail);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LogStatus);
+  const [userEmail, setUserEmail] = useRecoilState(newemail);
 
   const handleLogin = (email) => {
     setIsLoggedIn(true);
@@ -95,11 +98,13 @@ function App() {
   };
 
   return (
-    <RecoilRoot>
+    
     <Router>
       <Routes>
+      <Route path="/createForm" element={<UserForm/>} />
         <Route path="/login" element={isLoggedIn ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />} />
         <Route path="/home" element={isLoggedIn ? <Home userEmail={userEmail} /> : <Navigate to="/login" />} />
+        <Route path="/CreateConference" element={isLoggedIn ? <CreateConference /> : <Navigate to="/login" />} />
         <Route
           path="/conference/:conferenceId"
           element={isLoggedIn ? <ConferenceDetails userEmail={userEmail} /> : <Navigate to="/login" />}
@@ -111,7 +116,6 @@ function App() {
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>
-    </RecoilRoot>
   );
 }
 

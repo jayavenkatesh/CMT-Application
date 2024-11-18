@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { submitPaper } from './api.jsx';
-//import './SubmitPaper.css'; // Import the CSS file
+import './SubmitPaper.css'; // Import the CSS file
 
 const SubmitPaper = ({ conferenceId }) => {
     const [title, setTitle] = useState('');

@@ -116,14 +116,18 @@
 // Home.jsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchUserConferences, getAllConferences } from './api';
+import { fetchUserConferences, getAllConferences, getUserByMail } from './api';
 import './home.css';
 import Navbar from './Navbar';
+import { useNavigate } from 'react-router-dom';
 
 const Home = ({ userEmail }) => {
   const [activeTab, setActiveTab] = useState('myConferences');
   const [myConferences, setMyConferences] = useState([]);
   const [allConferences, setAllConferences] = useState([]);
+  const [role,setRole]=useState("");
+  const navigate=useNavigate();
+  //const username="jaya";
 
   // Fetch "My Conferences"
   useEffect(() => {
@@ -155,21 +159,38 @@ const Home = ({ userEmail }) => {
     }
   }, [activeTab]);
 
+  useEffect(() => {
+    if (activeTab === 'createConference') {
+      navigate('/createConference')
+    }
+  }, [activeTab]);
+
+  useEffect(()=>{
+    const result=async()=> {const role= await getUserByMail(userEmail); setRole(role.data) }
+    result();
+  },[userEmail])
   const displayedConferences = activeTab === 'myConferences' ? myConferences : allConferences;
 
   return (
     <div>
       
-      {/* <Navbar username={userEmail} /> */}
-      <h2>Welcome to the Conferences</h2>
+      <Navbar />
+      <h2>Welcome to the CMT</h2>
       <div className="conference-list-container">
         <div className="tabs">
-          <button onClick={() => setActiveTab('myConferences')} disabled={activeTab === 'myConferences'}>
+          <button  className={activeTab === 'all' ? 'active' : ''}
+          onClick={() => setActiveTab('myConferences')} disabled={activeTab === 'myConferences'}  >
             My Conferences
           </button>
-          <button onClick={() => setActiveTab('allConferences')} disabled={activeTab === 'allConferences'}>
+          <button  className={activeTab === 'all' ? 'active' : ''}
+          onClick={() => setActiveTab('allConferences')} disabled={activeTab === 'allConferences'}>
             All Conferences
           </button>
+          
+         {(role==="chairPerson") && <button  className={activeTab === 'all' ? 'active' : ''}
+          onClick={() => setActiveTab('createConference')} disabled={activeTab === 'createConference'}>
+            Create Conference
+          </button>}
         </div>
         
       </div>
@@ -188,8 +209,8 @@ const Home = ({ userEmail }) => {
           <tbody>
             {displayedConferences.map((conf) => (
               <tr key={conf.id}>
-                {/* <td><Link to={`/conference/${conf.id}`}>{conf.name}</Link></td> */}
-                <td><Link to={`SubmitPaper`}>{conf.name}</Link></td>
+                <td><Link to={`/conference/${conf.id}`}>{conf.name}</Link></td>
+                {/* <td><Link to={`/submit/`}>{conf.name}</Link></td> */}
                 <td>{conf.startDate}</td>
                 <td>{conf.endDate}</td>
                 <td>{conf.description}</td>

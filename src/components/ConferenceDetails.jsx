@@ -52,22 +52,33 @@
 // ConferenceDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getUserSubmission, deleteSubmission } from './api';
+import { getPaper, deleteSubmission } from './api';
+import './ConferenceDetails.css';
+import Navbar from './Navbar';
+import { useUserEmail } from '../hooks/useUserEmail';
 
-const ConferenceDetails = ({ userEmail }) => {
+const ConferenceDetails = () => {
   const { conferenceId } = useParams();
+ 
   const navigate = useNavigate();
-  const [submission, setSubmission] = useState(null);
+  const [submission, setSubmission] = useState();
   const [deadlinePassed, setDeadlinePassed] = useState(false);
-
+  const userEmail=useUserEmail();
   // Fetch user submission for the specific conference
   useEffect(() => {
     const fetchSubmission = async () => {
       try {
-        const result = await getUserSubmission(conferenceId, userEmail);
-        setSubmission(result);
+        // console.log(userEmail,conferenceId)
+        const result = await getPaper(userEmail,conferenceId);
+        // console.log(result)
+        setSubmission(result.paperDet);
+        // console.log(result.data);
         // Check if the deadline has passed
-        if (result && new Date(result.deadline) < new Date()) {
+        // console.log(result.confDet)
+        
+        // console.log(new Date(result.confDet.endDate))
+        // console.log(new Date())
+        if (result && new Date(result.confDet.endDate) < new Date()) {
           setDeadlinePassed(true);
         }
       } catch (error) {
@@ -77,24 +88,50 @@ const ConferenceDetails = ({ userEmail }) => {
     fetchSubmission();
   }, [conferenceId, userEmail]);
 
+  // const handleDelete = async () => {
+  //   try {
+  //     await deleteSubmission(submission.id);
+  //     setSubmission(null);
+  //     alert('Submission deleted successfully');
+  //   } catch (error) {
+  //     console.error('Error deleting submission:', error);
+  //   }
+  // };
+
+
   const handleDelete = async () => {
+    if (!submission?.id) {
+      alert("No submission ID found to delete!");
+      return;
+    }
+
     try {
-      await deleteSubmission(submission.id);
-      setSubmission(null);
-      alert('Submission deleted successfully');
+      const confirmed = window.confirm(
+        "Are you sure you want to delete your submission? This action cannot be undone."
+      );
+
+      if (confirmed) {
+        await deleteSubmission(submission.id); // API call to delete the submission
+        setSubmission(null); // Update state to remove submission details
+        alert("Submission deleted successfully!");
+      }
     } catch (error) {
-      console.error('Error deleting submission:', error);
+      console.error("Error deleting submission:", error);
+      alert("Failed to delete submission. Please try again.");
     }
   };
 
+
   return (
     <div>
-      <h2>Conference Details</h2>
+      <Navbar />
+      <h2>Submission Summary</h2>
+      {/* {console.log(submission)} */}
       {submission ? (
-        <div>
-          <h3>Your Submission</h3>
+        <div className='paper_edit'>
+          {/* <h3>Your Submission</h3> */}
           <p>Title: {submission.title}</p>
-          <p>Abstract: {submission.abstract}</p>
+          <p>Abstract: {submission.abstractContent}</p>
           {deadlinePassed ? (
             <p>Deadline has passed, you can no longer edit or delete this submission.</p>
           ) : (

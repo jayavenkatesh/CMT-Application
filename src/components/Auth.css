@@ -2,7 +2,11 @@
     text-align: center;
     padding: 20px;
   }
-  
+  .login-logo {
+    width: 400px; /* Adjust as per your design */
+    height: auto;
+    margin-bottom: 20px;
+  }
   .form-group {
     margin-bottom: 10px;
   }

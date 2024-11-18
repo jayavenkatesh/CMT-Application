@@ -10,6 +10,11 @@
   .navbar h1 {
     margin: 0;
   }
+  /* h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  } */
   
   .search-bar {
     padding: 5px;
@@ -20,5 +25,83 @@
   
   .user-name {
     margin-left: 10px;
+  }
+   
+  .user-menu {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    padding: 10px;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    width: 200px;
+  }
+  /* .dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+   */
+  .dropdown.open {
+    display: block;
+  }
+  
+  .dropdown li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .dropdown li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+  }
+  
+  .dropdown li a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+  }
+  
+  .dropdown a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    padding-left: 10px;
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
+    margin-right: 10px; /* Space between image and title */
   }
   
